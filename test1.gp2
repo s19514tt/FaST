@@ -1,0 +1,4 @@
+html:
+    <p>${message}</p>
+js:
+    const message = "Hello world"
