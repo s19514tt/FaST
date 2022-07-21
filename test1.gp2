@@ -1,4 +1,8 @@
 html:
     <p>${message}</p>
-js:
+    <p>${message+message2}</p>
+    
+script:
     const message = "Hello world"
+    const message2 = "Hello world"
+
