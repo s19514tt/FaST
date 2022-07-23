@@ -26,9 +26,7 @@
 		"reset": "yarn run clean:global && yarn install && yarn build",
 		"--------------- ": "",
 		"test:target": "mocha --recursive \"./test/tests\"",
-		"test:ci": "cross-env TEST_TARGET=dist yarn run test:target",
-		"posttest": "yarn run benchmark",
-		"prepare": "cd test && yarn install"
+		"test:ci": "cross-env TEST_TARGET=dist yarn run test:target"
 	},
 	"keywords": [
 		"html",
