@@ -9,9 +9,8 @@ import { parseLanguage } from './parser/language_parser'
 import { Dependent } from './types/dependent'
 
 async function main() {
-  const a = await loadFile('test3.gp2')
+  const a = await loadFile('test2.gp2')
   const languageParsed = parseLanguage(a)
-  console.log(languageParsed)
   const parsedHtml = parseHtml(languageParsed['html'])
   const dependents: Dependent[] = []
   const parsedJs = parseJs(languageParsed['script'])
@@ -21,7 +20,6 @@ async function main() {
     })
     .flatMap((item) => {
       return item.declarations.map((item) => {
-        console.log(item)
         if (item.id.type === AST_NODE_TYPES.Identifier) {
           return item.id.name
         }
@@ -31,13 +29,16 @@ async function main() {
       return !!item
     })
   console.log(variableNames)
-  /* findDependencies(parsedHtml, variableNames, dependents)
+  findDependencies(parsedHtml, variableNames, dependents)
   console.log(parsedHtml.toString())
   console.log(dependents)
   const parsed = divideHtmlBlocks(parsedHtml)
-  Object.keys(parsed).forEach((key) => {
-    //console.log(key, parsed[key].toString())
-  }) */
+  console.log('parsed.length', parsed.length)
+  parsed.forEach((item) => {
+    console.log(item.element.toString())
+    console.log(item)
+  })
+  console.log(parsedHtml.toString())
 }
 
 async function loadFile(path: string): Promise<string> {

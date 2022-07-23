@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid'
-import { Node } from 'node-html-parser'
+import { HTMLElement, Node, NodeType } from 'node-html-parser'
 import { Dependent } from '../types/dependent'
 
 export function findDependencies(
@@ -16,10 +16,9 @@ function searchChildAndDependencies(
   dependents: Dependent[]
 ) {
   if (elm.childNodes.length == 0) {
-    const [hasDependent, dependent] = parseRawText(elm.rawText, variableNames)
+    const [hasDependent, dependent] = parseRawText(elm, variableNames)
     if (hasDependent) {
       elm.rawText = ''
-      console.log(elm)
       elm.parentNode.setAttribute('id', dependent.nanoid)
       dependents.push(dependent as Dependent)
     }
@@ -31,14 +30,21 @@ function searchChildAndDependencies(
 }
 
 function parseRawText(
-  rawTxt: string,
+  elm: Node,
   variableNames: string[]
 ): [true, Dependent] | [false, null] {
+  const rawTxt = elm.rawText
   const matches = rawTxt.match(/\${ *[a-zA-Z_$][a-zA-Z_$0-9\+\. ]* *}/gm)
   if (!matches) {
     return [false, null]
-  } else {
-    const id = nanoid()
+  } else if (elm.parentNode.nodeType === NodeType.ELEMENT_NODE) {
+    const htmlElm = elm.parentNode as HTMLElement
+    let id: string
+    if (htmlElm.hasAttribute('id')) {
+      id = htmlElm.getAttribute('id') as string
+    } else {
+      id = nanoid()
+    }
     const dependencies: string[] = []
     for (let item of matches) {
       for (let variableName of variableNames) {
@@ -55,4 +61,5 @@ function parseRawText(
     }
     return [true, dependent]
   }
+  return [false, null]
 }

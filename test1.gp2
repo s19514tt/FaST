@@ -1,5 +1,5 @@
 html:
-    <p>${message}</p>
+    <p id='abc'>${message}</p>
     <p>${message+message2}</p>
     
 script:
