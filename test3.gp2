@@ -1,0 +1,7 @@
+html:
+    <p id='show1' :if='show1'>${message+message2}</p>
+    
+script:
+    const message = "Hello world"
+    const show = true
+

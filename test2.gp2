@@ -1,8 +1,8 @@
 html:
     <div>
         <p>${message}</p>
-        <p id='show1' :if='show'>${message+message2}</p>
-        <p :if='show'>${message+message2}</p>
+        <p id='show1' if='show1'>${message+message2}</p>
+        <p :if='show2'>${message+message2}</p>
     </div>
     
 script:
