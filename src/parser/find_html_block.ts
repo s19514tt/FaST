@@ -10,7 +10,7 @@ export function findHtmlBlock(
     for (let item of htmlBlocks) {
       const hasIdOnBlock = doesBlockHaveId(dep.id, item.element);
       if (hasIdOnBlock) {
-        dep.blockId = item.blockId;
+        item.dependencies.push(dep);
         break;
       }
     }

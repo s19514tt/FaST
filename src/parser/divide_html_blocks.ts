@@ -11,7 +11,7 @@ export function divideHtmlBlocks(elm: HTMLElement): HtmlBlock[] {
     blockId: "base",
     element: elm,
     ref: ["Base", null, null],
-    childHtmlBlock: [],
+    childHtmlBlocks: [],
     dependencies: [],
   });
   elementsToDelete.forEach((item) => {
@@ -110,7 +110,7 @@ function checkIfHtmlBlock(
       ref: refType,
       parentBlockId: parentId,
       condition: ifCondition,
-      childHtmlBlock: [],
+      childHtmlBlocks: [],
       dependencies: [],
     });
   }

@@ -7,6 +7,8 @@ import { parseJs } from "./js_parser";
 import { parseLanguage } from "./language_parser";
 import { Dependent } from "../types/dependent";
 import { findHtmlBlock as findHtmlBlockOfDeps } from "./find_html_block";
+import { findChildBlocksFromBase } from "./find_child_blocks";
+import { HtmlBlock } from "../types/html_block";
 
 export function parseGp2File(gp2TextFile: string) {
   const languageParsed = parseLanguage(gp2TextFile);
@@ -30,15 +32,21 @@ export function parseGp2File(gp2TextFile: string) {
   // console.log(variableNames);
   findDependencies(parsedHtml, variableNames, dependents);
   const dividedHtml = divideHtmlBlocks(parsedHtml);
-  dividedHtml.forEach((item) => {
-    console.log("----------------------------");
-    console.log("elm", item.element.toString());
-    console.log("ref", item.ref);
-    console.log("cond", item.condition ?? "no condition");
-    console.log("parent", item.parentBlockId ?? "no parent");
-    console.log("block", item.blockId);
-  });
-  console.log("----------------------------");
   findHtmlBlockOfDeps(dependents, dividedHtml);
-  console.log(dependents);
+  const base = findChildBlocksFromBase(dividedHtml);
+  printHtmlBlock(base);
+  // console.log("----------------------------");
+}
+
+function printHtmlBlock(item: HtmlBlock) {
+  console.log("----------------------------");
+  console.log("elm", item.element.toString());
+  console.log("ref", item.ref);
+  console.log("cond", item.condition ?? "no condition");
+  // console.log("parent", item.parentBlockId ?? "no parent");
+  console.log("block", item.blockId);
+  console.log("deps", item.dependencies);
+  console.log("childs");
+  item.childHtmlBlocks.map((child) => printHtmlBlock(child));
+  console.log("----------------------------");
 }
