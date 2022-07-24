@@ -6,11 +6,11 @@ import { HtmlBlock, RefType } from "../types/html_block";
 export function divideHtmlBlocks(elm: HTMLElement): HtmlBlock[] {
   let htmlBlocks: HtmlBlock[] = [];
   let elementsToDelete: DeleteListItem[] = [];
-  checkIfHtmlBlock(elm, htmlBlocks, elementsToDelete);
+  checkIfHtmlBlock(elm, htmlBlocks, elementsToDelete, "base");
   htmlBlocks.push({
     blockId: "base",
     element: elm,
-    ref: ["Empty", null],
+    ref: ["Base", null, null],
   });
   elementsToDelete.forEach((item) => {
     if (item.isDependencyNewTextNode) {
@@ -25,8 +25,10 @@ export function divideHtmlBlocks(elm: HTMLElement): HtmlBlock[] {
 function checkIfHtmlBlock(
   elm: HTMLElement,
   htmlBlock: HtmlBlock[],
-  elementsToDelete: DeleteListItem[]
+  elementsToDelete: DeleteListItem[],
+  parentId: string
 ) {
+  let newParentId: string | undefined;
   if (elm.hasAttribute(":if")) {
     let id: string;
     if (elm.hasAttribute("id")) {
@@ -45,14 +47,22 @@ function checkIfHtmlBlock(
 
     let isDependencyNewTextNode = false;
 
+    let parentElementId: string | undefined;
+    if (!elm.parentNode.hasAttribute("id")) {
+      parentElementId = nanoid();
+      elm.parentNode.setAttribute("id", parentElementId);
+    } else {
+      parentElementId = elm.parentNode.getAttribute("id");
+    }
+
     let refType: RefType;
     if (!elm.nextSibling) {
-      refType = ["Empty", null];
+      refType = ["Empty", null, parentElementId as string];
     } else if (
       elm.nextSibling.nodeType === NodeType.ELEMENT_NODE &&
       (elm.nextSibling as HTMLElement).hasAttribute(":if")
     ) {
-      refType = ["TextNode", null];
+      refType = ["TextNode", null, parentElementId as string];
       markParentAsManualRenderer(elm);
       isDependencyNewTextNode = true;
     } else if (elm.nextSibling.nodeType === NodeType.TEXT_NODE) {
@@ -65,11 +75,12 @@ function checkIfHtmlBlock(
         refType = [
           "Element",
           (elm.nextSibling as HTMLElement).getAttribute("id") as string,
+          parentElementId as string,
         ];
       } else {
         const newId: string = nanoid();
         (elm.nextSibling as HTMLElement).setAttribute("id", newId);
-        refType = ["Element", newId];
+        refType = ["Element", newId, parentElementId as string];
       }
     }
     if (elm.hasAttribute("id")) {
@@ -77,21 +88,36 @@ function checkIfHtmlBlock(
     } else {
       id = nanoid();
     }
+
     elementsToDelete.push({
       elm: elm,
       isDependencyNewTextNode: isDependencyNewTextNode,
       blockName: id,
     });
 
+    const ifCondition = elm.getAttribute(":if");
+    elm.removeAttribute(":if");
+
+    const blockId = nanoid();
+
+    newParentId = blockId;
+
     htmlBlock.push({
-      blockId: nanoid(),
+      blockId: blockId,
       element: elm,
       ref: refType,
+      parentBlockId: parentId,
+      condition: ifCondition,
     });
   }
   elm.childNodes.forEach((node) => {
     if (node.nodeType == NodeType.ELEMENT_NODE) {
-      checkIfHtmlBlock(node as HTMLElement, htmlBlock, elementsToDelete);
+      checkIfHtmlBlock(
+        node as HTMLElement,
+        htmlBlock,
+        elementsToDelete,
+        newParentId ?? parentId
+      );
     }
   });
 }

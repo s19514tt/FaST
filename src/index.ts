@@ -38,8 +38,12 @@ async function main() {
   const dividedHtml = divideHtmlBlocks(parsedHtml);
   console.log("parsed.length", dividedHtml.length);
   dividedHtml.forEach((item) => {
+    console.log("----------------------------");
     console.log("elm", item.element.toString());
     console.log("ref", item.ref);
+    console.log("cond", item.condition ?? "no condition");
+    console.log("parent", item.parentBlockId ?? "no parent");
+    console.log("block", item.blockId);
   });
 }
 
