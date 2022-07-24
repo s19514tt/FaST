@@ -54,7 +54,7 @@ function checkIfHtmlBlock(elm: HTMLElement, htmlBlock: HtmlBlock[]) {
         refType = ['Element', newId]
       }
     }
-    elm.remove()
+    elm.remove() //FIXME:removeをしてしまうとelementの順番が変わってしまい正しいrefが探せない
     if (elm.hasAttribute('id')) {
       id = elm.getAttribute('id') as string
     } else {
@@ -66,19 +66,12 @@ function checkIfHtmlBlock(elm: HTMLElement, htmlBlock: HtmlBlock[]) {
       element: elm,
       ref: refType,
     })
-
-    // htmlBlock[id].childNodes.forEach((node) => {
-    //   if (node.nodeType == NodeType.ELEMENT_NODE) {
-    //     checkIfHtmlBlock(node as HTMLElement, htmlBlock)
-    //   }
-    // })
-  } else {
-    elm.childNodes.forEach((node) => {
-      if (node.nodeType == NodeType.ELEMENT_NODE) {
-        checkIfHtmlBlock(node as HTMLElement, htmlBlock)
-      }
-    })
   }
+  elm.childNodes.forEach((node) => {
+    if (node.nodeType == NodeType.ELEMENT_NODE) {
+      checkIfHtmlBlock(node as HTMLElement, htmlBlock)
+    }
+  })
 }
 
 function markParentAsManualRenderer(elm: Node) {

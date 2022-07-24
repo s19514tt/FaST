@@ -7,10 +7,13 @@ import { parseHtml } from './parser/html_parser'
 import { parseJs } from './parser/js_parser'
 import { parseLanguage } from './parser/language_parser'
 import { Dependent } from './types/dependent'
+import { ArgumentParser } from 'argparse'
 
 async function main() {
-  const a = await loadFile('test2.gp2')
-  const languageParsed = parseLanguage(a)
+  const parser = new ArgumentParser()
+  parser.add_argument('filename', { type: 'string' })
+  const gp2TextFile = await loadFile(parser.parse_args().filename)
+  const languageParsed = parseLanguage(gp2TextFile)
   const parsedHtml = parseHtml(languageParsed['html'])
   const dependents: Dependent[] = []
   const parsedJs = parseJs(languageParsed['script'])
@@ -32,13 +35,12 @@ async function main() {
   findDependencies(parsedHtml, variableNames, dependents)
   console.log(parsedHtml.toString())
   console.log(dependents)
-  const parsed = divideHtmlBlocks(parsedHtml)
-  console.log('parsed.length', parsed.length)
-  parsed.forEach((item) => {
-    console.log(item.element.toString())
-    console.log(item)
+  const dividedHtml = divideHtmlBlocks(parsedHtml)
+  console.log('parsed.length', dividedHtml.length)
+  dividedHtml.forEach((item) => {
+    console.log('elm', item.element.toString())
+    console.log('ref', item.ref)
   })
-  console.log(parsedHtml.toString())
 }
 
 async function loadFile(path: string): Promise<string> {

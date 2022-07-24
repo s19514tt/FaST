@@ -1,10 +1,11 @@
-import { minify } from 'html-minifier'
-import parse, { HTMLElement, Node } from 'node-html-parser'
+import parse, { HTMLElement } from 'node-html-parser'
 
 export function parseHtml(html: string): HTMLElement {
-  const minifiedHtml = minify(html, {
-    collapseWhitespace: true,
-  })
-  const parsedHtml = parse(minifiedHtml)
+  const minifiedHtml = minifyHtml(html)
+  const parsedHtml = parse(minifiedHtml.toString())
   return parsedHtml
+}
+
+function minifyHtml(html: string) {
+  return html.replace(/(^ *)|(\n)|((?<=>) +)/gm, '')
 }

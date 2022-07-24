@@ -7,5 +7,6 @@ html:
     
 script:
     const message = "Hello world"
+    const message2 = "Hello world"
     const show = true
 

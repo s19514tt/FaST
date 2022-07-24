@@ -5,5 +5,7 @@ export type RefType = ['Element', string] | ['Empty', null] | ['TextNode', null]
 export type HtmlBlock = {
   blockId: string
   element: HTMLElement
-  ref: RefType
+  ref: RefType //appendChildの際に用いるreference
 }
+
+//HTML Blockを通してdependしている変数も記述する

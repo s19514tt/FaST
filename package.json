@@ -10,14 +10,13 @@
   "author": "tomu_1576 <s19514tt@sfc.keio.ac.jp> (https://github.com/s19514tt)",
   "license": "ISC",
   "dependencies": {
-    "@babel/parser": "^7.18.9",
     "@typescript-eslint/typescript-estree": "^5.30.7",
-    "html-minifier": "^4.0.0",
+    "argparse": "^2.0.1",
     "nanoid": "^3.0.0",
     "node-html-parser": "file:libs/node-html-parser"
   },
   "devDependencies": {
-    "@types/html-minifier": "^4.0.2",
+    "@types/argparse": "^2.0.10",
     "ts-node": "^10.9.1"
   }
 }

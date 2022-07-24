@@ -1,0 +1,20 @@
+html:
+    <div>
+        <p>${message}</p>
+        <p id='show1'>${message+message2}</p>
+        <div :if='show2'>
+            <div>
+                ${message+message}
+            </div>
+            <p :if='show3'>
+                ${message2+message2}
+            </p>
+        </div>
+    </div>
+script:
+    const message = "Hello world"
+    const message2 = "Hello world"
+    const show1 = true
+    const show2 = true
+    const show3 = true
+
