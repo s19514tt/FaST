@@ -1,7 +1,7 @@
-import { HTMLElement } from 'node-html-parser'
+import { HTMLElement } from "node-html-parser";
 
 export type DeleteListItem = {
-  elm: HTMLElement
-  isDependencyNewTextNode: boolean
-  blockName: string
-}
+  elm: HTMLElement;
+  isDependencyNewTextNode: boolean;
+  blockName: string;
+};

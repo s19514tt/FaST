@@ -1,5 +1,5 @@
 export type Dependent = {
-  nanoid: string
-  elementRaw: string
-  dependingOn: string[]
-}
+  nanoid: string;
+  elementRaw: string;
+  dependingOn: string[];
+};
