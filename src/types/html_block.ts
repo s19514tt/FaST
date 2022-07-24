@@ -1,4 +1,5 @@
 import { HTMLElement } from "node-html-parser";
+import { Dependent } from "./dependent";
 
 export type RefType =
   | ["Element", string, string]
@@ -14,6 +15,8 @@ export type HtmlBlock = {
   ref: RefType; //appendChildの際に用いるreference
   parentBlockId?: string;
   condition?: string;
+  dependencies: Dependent[];
+  childHtmlBlock: HtmlBlock[];
 };
 
 //HTML Blockを通してdependしている変数も記述する

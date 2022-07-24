@@ -11,6 +11,8 @@ export function divideHtmlBlocks(elm: HTMLElement): HtmlBlock[] {
     blockId: "base",
     element: elm,
     ref: ["Base", null, null],
+    childHtmlBlock: [],
+    dependencies: [],
   });
   elementsToDelete.forEach((item) => {
     if (item.isDependencyNewTextNode) {
@@ -108,6 +110,8 @@ function checkIfHtmlBlock(
       ref: refType,
       parentBlockId: parentId,
       condition: ifCondition,
+      childHtmlBlock: [],
+      dependencies: [],
     });
   }
   elm.childNodes.forEach((node) => {

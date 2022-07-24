@@ -6,6 +6,7 @@ import { parseHtml } from "./html_parser";
 import { parseJs } from "./js_parser";
 import { parseLanguage } from "./language_parser";
 import { Dependent } from "../types/dependent";
+import { findHtmlBlock as findHtmlBlockOfDeps } from "./find_html_block";
 
 export function parseGp2File(gp2TextFile: string) {
   const languageParsed = parseLanguage(gp2TextFile);
@@ -38,5 +39,6 @@ export function parseGp2File(gp2TextFile: string) {
     console.log("block", item.blockId);
   });
   console.log("----------------------------");
+  findHtmlBlockOfDeps(dependents, dividedHtml);
   console.log(dependents);
 }
