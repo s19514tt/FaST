@@ -1,19 +1,32 @@
 import { nanoid } from 'nanoid'
 import { HTMLElement, Node, NodeType } from 'node-html-parser'
+import { DeleteListItem } from '../types/delete_list_item'
 import { HtmlBlock, RefType } from '../types/html_block'
 
 export function divideHtmlBlocks(elm: HTMLElement): HtmlBlock[] {
   let htmlBlocks: HtmlBlock[] = []
-  checkIfHtmlBlock(elm, htmlBlocks)
+  let elementsToDelete: DeleteListItem[] = []
+  checkIfHtmlBlock(elm, htmlBlocks, elementsToDelete)
   htmlBlocks.push({
     blockId: 'base',
     element: elm,
     ref: ['Empty', null],
   })
+  elementsToDelete.forEach((item) => {
+    if (item.isDependencyNewTextNode) {
+      item.elm.replaceWith(`place_for_text_node_${item.blockName}`)
+    } else {
+      item.elm.remove()
+    }
+  })
   return htmlBlocks
 }
 
-function checkIfHtmlBlock(elm: HTMLElement, htmlBlock: HtmlBlock[]) {
+function checkIfHtmlBlock(
+  elm: HTMLElement,
+  htmlBlock: HtmlBlock[],
+  elementsToDelete: DeleteListItem[]
+) {
   if (elm.hasAttribute(':if')) {
     let id: string
     if (elm.hasAttribute('id')) {
@@ -30,36 +43,45 @@ function checkIfHtmlBlock(elm: HTMLElement, htmlBlock: HtmlBlock[]) {
 
     //TODO: Baseも逐次renderingできるようにする
 
+    let isDependencyNewTextNode = false
+
     let refType: RefType
-    if (!elm.previousSibling) {
+    if (!elm.nextSibling) {
       refType = ['Empty', null]
     } else if (
-      elm.previousSibling.nodeType === NodeType.ELEMENT_NODE &&
-      (elm.previousSibling as HTMLElement).hasAttribute(':if')
+      elm.nextSibling.nodeType === NodeType.ELEMENT_NODE &&
+      (elm.nextSibling as HTMLElement).hasAttribute(':if')
     ) {
       refType = ['TextNode', null]
       markParentAsManualRenderer(elm)
-    } else if (elm.previousSibling.nodeType === NodeType.TEXT_NODE) {
-      refType = ['TextNode', null]
-      markParentAsManualRenderer(elm)
+      isDependencyNewTextNode = true
+    } else if (elm.nextSibling.nodeType === NodeType.TEXT_NODE) {
+      throw Error('If block must not be a sibling of a text node')
+      // 禁止実装なのでとりあえずここが実行されることはないはず
+      /* refType = ['TextNode', null]
+      markParentAsManualRenderer(elm) */
     } else {
-      if ((elm.previousSibling as HTMLElement).getAttribute('id')) {
+      if ((elm.nextSibling as HTMLElement).getAttribute('id')) {
         refType = [
           'Element',
-          (elm.previousSibling as HTMLElement).getAttribute('id') as string,
+          (elm.nextSibling as HTMLElement).getAttribute('id') as string,
         ]
       } else {
         const newId: string = nanoid()
-        ;(elm.previousSibling as HTMLElement).setAttribute('id', newId)
+        ;(elm.nextSibling as HTMLElement).setAttribute('id', newId)
         refType = ['Element', newId]
       }
     }
-    elm.remove() //FIXME:removeをしてしまうとelementの順番が変わってしまい正しいrefが探せない
     if (elm.hasAttribute('id')) {
       id = elm.getAttribute('id') as string
     } else {
       id = nanoid()
     }
+    elementsToDelete.push({
+      elm: elm,
+      isDependencyNewTextNode: isDependencyNewTextNode,
+      blockName: id,
+    })
 
     htmlBlock.push({
       blockId: nanoid(),
@@ -69,7 +91,7 @@ function checkIfHtmlBlock(elm: HTMLElement, htmlBlock: HtmlBlock[]) {
   }
   elm.childNodes.forEach((node) => {
     if (node.nodeType == NodeType.ELEMENT_NODE) {
-      checkIfHtmlBlock(node as HTMLElement, htmlBlock)
+      checkIfHtmlBlock(node as HTMLElement, htmlBlock, elementsToDelete)
     }
   })
 }
@@ -81,9 +103,8 @@ function markParentAsManualRenderer(elm: Node) {
     !(elm.parentNode as HTMLElement).hasAttribute('5DDspa25gdlBWoWYrDGTT')
   ) {
     ;(elm.parentNode as HTMLElement).setAttribute(
-      '5DDspa25gdlBWoWYrDGTT',
-      'null'
+      'manual-5DDspa25gdlBWoWYrDGTT',
+      ''
     )
   }
 }
-markParentAsManualRenderer

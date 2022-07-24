@@ -1,0 +1,15 @@
+html:
+    <div id='parent-elm'>
+        <div id='child-elm1' :if='show1'>
+            ${message+message}
+        </div>
+        <p id='child-elm2' :if='show2'>
+            ${message2+message2}
+        </p>
+    </div>
+script:
+    const message = "Hello world"
+    const message2 = "Hello world"
+    const show1 = true
+    const show2 = true
+

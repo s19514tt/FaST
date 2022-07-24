@@ -9,3 +9,4 @@ export type HtmlBlock = {
 }
 
 //HTML Blockを通してdependしている変数も記述する
+//HTML 親またはその親の関係にある全てのブロックのifstatementをまとめる
