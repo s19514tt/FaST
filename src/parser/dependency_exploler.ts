@@ -19,7 +19,7 @@ function searchChildAndDependencies(
     const [hasDependent, dependent] = parseRawText(elm, variableNames);
     if (hasDependent) {
       elm.rawText = "";
-      elm.parentNode.setAttribute("id", dependent.nanoid);
+      elm.parentNode.setAttribute("id", dependent.id);
       dependents.push(dependent as Dependent);
     }
   } else {
@@ -55,7 +55,7 @@ function parseRawText(
       }
     }
     const dependent: Dependent = {
-      nanoid: id,
+      id: id,
       dependingOn: dependencies,
       elementRaw: rawTxt,
     };
