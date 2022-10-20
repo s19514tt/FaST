@@ -16,7 +16,7 @@ export function divideHtmlBlocks(elm: HTMLElement): HtmlBlock[] {
   });
   elementsToDelete.forEach((item) => {
     if (item.isDependencyNewTextNode) {
-      item.elm.replaceWith(`place_for_text_node_${item.blockName}`);
+      item.elm.replaceWith(`\\place_for_text_node_${item.blockName}\\`);
     } else {
       item.elm.remove();
     }
@@ -38,11 +38,11 @@ function checkIfHtmlBlock(
     } else {
       id = nanoid();
     }
-    //refの決め方
-    //該当elmが最初のelement→null
-    //previousがelement→id
-    //previousがtext→textnode→兄弟の構築を手動で行う必要がある
-    //previousがelement with if→textnode→兄弟の構築を手動で行う必要がある
+    // refの決め方
+    // 該当elmが最初のelement→null
+    // previousがelement→id
+    // previousがtext→textnode→兄弟の構築を手動で行う必要がある
+    // previousがelement with if→textnode→兄弟の構築を手動で行う必要がある
     // htmlBlock[id] = elm
 
     //TODO: Baseも逐次renderingできるようにする
@@ -130,7 +130,7 @@ function markParentAsManualRenderer(elm: Node) {
   if (
     elm.parentNode &&
     elm.parentNode.nodeType === NodeType.ELEMENT_NODE &&
-    !(elm.parentNode as HTMLElement).hasAttribute("5DDspa25gdlBWoWYrDGTT")
+    !(elm.parentNode as HTMLElement).hasAttribute("manual-5DDspa25gdlBWoWYrDGTT")
   ) {
     (elm.parentNode as HTMLElement).setAttribute(
       "manual-5DDspa25gdlBWoWYrDGTT",

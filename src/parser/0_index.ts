@@ -10,7 +10,7 @@ import { findHtmlBlock as findHtmlBlockOfDeps } from "./find_html_block";
 import { findChildBlocksFromBase } from "./find_child_blocks";
 import { HtmlBlock } from "../types/html_block";
 
-export function parseGp2File(gp2TextFile: string) {
+export function parseGp2File(gp2TextFile: string): HtmlBlock {
   const languageParsed = parseLanguage(gp2TextFile);
   const parsedHtml = parseHtml(languageParsed["html"]);
   const dependents: Dependent[] = [];
@@ -35,6 +35,7 @@ export function parseGp2File(gp2TextFile: string) {
   findHtmlBlockOfDeps(dependents, dividedHtml);
   const base = findChildBlocksFromBase(dividedHtml);
   printHtmlBlock(base);
+  return base
   // console.log("----------------------------");
 }
 

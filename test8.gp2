@@ -1,0 +1,13 @@
+html:
+    <div id='parent-elm'>
+        <div id='child-elm1' :if='show1'>
+        </div>
+        <div id='child-elm2' :if='show2'>
+        </div>
+        <div id='child-elm3' :if='show3'>
+        </div>
+    </div>
+script:
+    let show1 = true
+    let show2 = false
+    let show3 = true
