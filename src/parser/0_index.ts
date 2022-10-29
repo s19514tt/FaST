@@ -9,8 +9,14 @@ import { Dependent } from "../types/dependent";
 import { findHtmlBlock as findHtmlBlockOfDeps } from "./find_html_block";
 import { findChildBlocksFromBase } from "./find_child_blocks";
 import { HtmlBlock } from "../types/html_block";
+import { extractJavaScriptVariableInitialValue } from "../utils/extract_initial_value";
 
-export function parseGp2File(gp2TextFile: string): HtmlBlock {
+export function parseGp2File(gp2TextFile: string): [
+  HtmlBlock,
+  {
+    [key: string]: string;
+  }
+] {
   const languageParsed = parseLanguage(gp2TextFile);
   const parsedHtml = parseHtml(languageParsed["html"]);
   const dependents: Dependent[] = [];
@@ -29,13 +35,16 @@ export function parseGp2File(gp2TextFile: string): HtmlBlock {
     .filter((item): item is string => {
       return !!item;
     });
+  const variables = extractJavaScriptVariableInitialValue(
+    languageParsed["script"]
+  );
   // console.log(variableNames);
   findDependencies(parsedHtml, variableNames, dependents);
   const dividedHtml = divideHtmlBlocks(parsedHtml);
   findHtmlBlockOfDeps(dependents, dividedHtml);
   const base = findChildBlocksFromBase(dividedHtml);
   printHtmlBlock(base);
-  return base
+  return [base, variables];
   // console.log("----------------------------");
 }
 

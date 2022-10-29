@@ -1,21 +1,23 @@
 import parse, { HTMLElement } from "node-html-parser";
 import { HtmlBlock } from "../types/html_block";
 
-export function analyzeBase(htmlBlock: HtmlBlock) {
-  walkElms(htmlBlock, htmlBlock);
+export function analyzeBase(
+  htmlBlock: HtmlBlock,
+  condRef: {
+    [key: string]: string;
+  }
+) {
+  walkElms(htmlBlock, htmlBlock, condRef);
 }
 
 function walkElms(
   htmlBlock: HtmlBlock,
   baseBlock: HtmlBlock,
+  condRef: {
+    [key: string]: string;
+  },
   parentBlock?: HtmlBlock
 ) {
-  //FIXME:解析できるようにする
-  const condRef: { [key: string]: string } = {
-    show1: "true",
-    show2: "false",
-    show3: "true",
-  };
   htmlBlock.element = parse(htmlBlock.element.toString());
   if (htmlBlock.ref[0] === "Base") {
   } else if (htmlBlock.ref[0] === "Empty") {
@@ -58,13 +60,32 @@ function walkElms(
     console.log(condRef[trimmedCond] === "true");
     // @ts-ignore
     if (condRef[trimmedCond] === "true") {
-      //FIXME:
-      baseBlock.element.innerHTML += htmlBlock.element.toString();
+      console.log(
+        baseBlock.element.childNodes[0].childNodes.map(
+          (item) => (item as HTMLElement).id
+        )
+      );
+      const ind = baseBlock.element.childNodes[0].childNodes.findIndex(
+        (item) => (item as HTMLElement).id === htmlBlock.ref[1]
+      );
+
+      console.log(ind);
+
+      baseBlock.element.childNodes[0].childNodes.splice(
+        ind,
+        0,
+        htmlBlock.element
+      );
+
+      /* (
+        //FIXME:
+        baseBlock.element.childNodes[0] as HTMLElement
+      ).innerHTML += htmlBlock.element.toString(); */
     }
   }
   if (htmlBlock.childHtmlBlocks.length > 0) {
     htmlBlock.childHtmlBlocks.forEach((block) => {
-      walkElms(block, baseBlock, htmlBlock);
+      walkElms(block, baseBlock, condRef, htmlBlock);
     });
   }
 }

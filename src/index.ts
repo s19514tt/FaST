@@ -7,8 +7,8 @@ async function main() {
   const parser = new ArgumentParser();
   parser.add_argument("filename", { type: String });
   const gp2TextFile = await loadFile(parser.parse_args().filename);
-  const parsedBase = parseGp2File(gp2TextFile);
-  generateJs(parsedBase);
+  const [parsedBase, variables] = parseGp2File(gp2TextFile);
+  generateJs(parsedBase, variables);
 }
 
 main();

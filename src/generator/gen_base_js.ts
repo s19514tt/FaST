@@ -3,7 +3,7 @@ import { HtmlBlock } from "../types/html_block";
 
 export function generateBaseJs(block: HtmlBlock) {
   const first: [string] = [""];
-  const queue: {
+  const renderQueue: {
     parentId: string;
     innerElm: string[];
   }[] = [];
@@ -31,9 +31,7 @@ export function generateBaseJs(block: HtmlBlock) {
         break;
       }
     }
-    console.log("innerElm");
-    console.log(innerElm);
-    queue.push({
+    renderQueue.push({
       parentId: (block.element.childNodes[0] as HTMLElement).id,
       innerElm,
     });
@@ -42,6 +40,6 @@ export function generateBaseJs(block: HtmlBlock) {
       "manual-5DDspa25gdlBWoWYrDGTT"
     );
   }
-  console.log(queue);
-  return queue;
+  console.log(renderQueue);
+  return renderQueue;
 }

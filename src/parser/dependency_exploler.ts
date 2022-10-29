@@ -48,7 +48,7 @@ function parseRawText(
     const dependencies: string[] = [];
     for (let item of matches) {
       for (let variableName of variableNames) {
-        // FIXME
+        // FIXME:　空欄
         if (item.includes(variableName)) {
           dependencies.push(variableName);
         }

@@ -9,5 +9,5 @@ html:
     </div>
 script:
     let show1 = true
-    let show2 = false
+    let show2 = true
     let show3 = true
