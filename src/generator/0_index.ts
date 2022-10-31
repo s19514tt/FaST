@@ -1,6 +1,7 @@
 import { HtmlBlock } from "../types/html_block";
 import { analyzeBase } from "./walk_elm";
-import { generateBaseJs } from "./gen_base_js";
+import { generateBaseHtmlAndRenderQueue } from "./gen_base_js";
+import { genJs } from "./gen_js";
 
 export function generateJs(
   htmlBlock: HtmlBlock,
@@ -10,7 +11,9 @@ export function generateJs(
 ) {
   //TODO: deep copy here
   analyzeBase(htmlBlock, analyzedJsVariables);
-  const queue = generateBaseJs(htmlBlock);
+  const queue = generateBaseHtmlAndRenderQueue(htmlBlock);
+  return genJs(htmlBlock, queue);
+  
 
-  console.log(htmlBlock.element.toString());
+  // console.log(htmlBlock.element.toString());
 }

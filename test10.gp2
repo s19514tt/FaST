@@ -4,9 +4,7 @@ html:
         </div>
         <div id='child-elm3'>いい
         </div>
-        <div id='child-elm1' :if='show 1'>う
-        </div>
-        <div id='child-elm4' :if='show1'>え
+        <div id='child-elm1' :if='show1'>う
         </div>
     </div>
 script:
