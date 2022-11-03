@@ -1,6 +1,1 @@
-document.body.innerHTML = `<div id="parent-elm"></div>`
-const djvxlnqkop = document.querySelector('#parent-elm')
-djvxlnqkop.innerHTML += `<div id='child-elm2'>あああ</div><div id='child-elm3'>いい</div>`
-lcvvevxkgs = document.createTextNode('')
-djvxlnqkop.insertBefore(lcvvevxkgs,null)
-djvxlnqkop.innerHTML += `<div id="child-elm1">う</div><div id="child-elm4">え</div>`
+document.body.innerHTML = `<div id="parent-elm" manual-5DDspa25gdlBWoWYrDGTT><div id='child-elm1'>あああ</div><div id='child-elm2'>いい</div><span id="Kn7CY94nJiwy1bSfqOaKW__child-elm3"></span><div id="child-elm3">うう</div><div id="child-elm4">ええ</div><div id='child-elm5'>おお</div></div>`

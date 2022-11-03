@@ -16,8 +16,6 @@ export function generateBaseHtmlAndRenderQueue(block: HtmlBlock) {
       const txtNodeRegex = /^(\\place_for_text_node_child-elm\d\\)|<.+?<\/.+?>/;
 
       const match = rawString.match(txtNodeRegex);
-      console.log("match");
-      console.log(match);
       if (match != null) {
         const isLastElmAndNewElmHTML = () => {
           if (match[0].startsWith("\\place_for_text_node_child-elm")) {
@@ -38,8 +36,6 @@ export function generateBaseHtmlAndRenderQueue(block: HtmlBlock) {
         }
       }
       rawString = rawString.replace(txtNodeRegex, "");
-      console.log("rawString");
-      console.log(rawString);
 
       if (rawString == "") {
         break;
@@ -54,6 +50,5 @@ export function generateBaseHtmlAndRenderQueue(block: HtmlBlock) {
       "manual-5DDspa25gdlBWoWYrDGTT"
     );
   }
-  console.log(renderQueue);
   return renderQueue;
 }

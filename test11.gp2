@@ -6,7 +6,10 @@ html:
         </div>
         <div id='child-elm3' :if='show1'>うう
         </div>
-        <div id='child-elm4' :if='show1'>ええ
+        <div id='child-elm4' :if='show1'>
+            <span>ええ</span>
+            <div id='child-elm6' :if='show3'>かか
+            </div>
         </div>
         <div id='child-elm5'>おお
         </div>
@@ -14,3 +17,4 @@ html:
 script:
     let show1 = true
     let show2 = true
+    let show3 = true

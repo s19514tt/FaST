@@ -17,6 +17,7 @@ export type HtmlBlock = {
   condition?: string;
   dependencies: Dependent[];
   childHtmlBlocks: HtmlBlock[];
+  parentHtmlBlock?: HtmlBlock;
 };
 
 //HTML Blockを通してdependしている変数も記述する
