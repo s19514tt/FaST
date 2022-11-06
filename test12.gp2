@@ -1,0 +1,20 @@
+html:
+    <div id='parent-elm'>
+        <div id='child-elm1'>あああ
+        </div>
+        <div id='child-elm2'>いい
+        </div>
+        <div id='child-elm3' :if='show2'>うう
+        </div>
+        <div id='child-elm4' :if='show1'>
+            <span>ええ</span>
+            <div id='child-elm6' :if='show3'>かか
+            </div>
+        </div>
+        <div id='child-elm5'>おお
+        </div>
+    </div>
+script:
+    let show1 = false
+    let show2 = false
+    let show3 = false

@@ -15,7 +15,8 @@ export function parseGp2File(gp2TextFile: string): [
   HtmlBlock,
   {
     [key: string]: string;
-  }
+  },
+  string
 ] {
   const languageParsed = parseLanguage(gp2TextFile);
   const parsedHtml = parseHtml(languageParsed["html"]);
@@ -43,10 +44,10 @@ export function parseGp2File(gp2TextFile: string): [
   const dividedHtml = divideHtmlBlocks(parsedHtml);
   findHtmlBlockOfDeps(dependents, dividedHtml);
   const base = findChildBlocksFromBase(dividedHtml);
-  if (false) {
+  if (true) {
     printHtmlBlock(base);
   }
-  return [base, variables];
+  return [base, variables, languageParsed["script"]];
   // console.log("----------------------------");
 }
 

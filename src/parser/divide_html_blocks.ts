@@ -2,6 +2,7 @@ import { nanoid } from "nanoid";
 import { HTMLElement, Node, NodeType } from "node-html-parser";
 import { DeleteListItem } from "../types/delete_list_item";
 import { HtmlBlock, RefType } from "../types/html_block";
+import { alphabetId } from "../utils/alphabet_id";
 
 export function divideHtmlBlocks(elm: HTMLElement): HtmlBlock[] {
   let htmlBlocks: HtmlBlock[] = [];
@@ -36,7 +37,7 @@ function checkIfHtmlBlock(
     if (elm.hasAttribute("id")) {
       id = elm.getAttribute("id") as string;
     } else {
-      id = nanoid();
+      id = alphabetId();
     }
     // refの決め方
     // 該当elmが最初のelement→null
@@ -51,7 +52,7 @@ function checkIfHtmlBlock(
 
     let parentElementId: string | undefined;
     if (!elm.parentNode.hasAttribute("id")) {
-      parentElementId = nanoid();
+      parentElementId = alphabetId();
       elm.parentNode.setAttribute("id", parentElementId);
     } else {
       parentElementId = elm.parentNode.getAttribute("id");
@@ -80,7 +81,7 @@ function checkIfHtmlBlock(
           parentElementId as string,
         ];
       } else {
-        const newId: string = nanoid();
+        const newId: string = alphabetId();
         (elm.nextSibling as HTMLElement).setAttribute("id", newId);
         refType = ["Element", newId, parentElementId as string];
       }
@@ -88,7 +89,7 @@ function checkIfHtmlBlock(
     if (elm.hasAttribute("id")) {
       id = elm.getAttribute("id") as string;
     } else {
-      id = nanoid();
+      id = alphabetId();
     }
 
     elementsToDelete.push({
@@ -100,7 +101,7 @@ function checkIfHtmlBlock(
     const ifCondition = elm.getAttribute(":if");
     elm.removeAttribute(":if");
 
-    const blockId = nanoid();
+    const blockId = alphabetId();
 
     newParentId = blockId;
 
@@ -130,7 +131,9 @@ function markParentAsManualRenderer(elm: Node) {
   if (
     elm.parentNode &&
     elm.parentNode.nodeType === NodeType.ELEMENT_NODE &&
-    !(elm.parentNode as HTMLElement).hasAttribute("manual-5DDspa25gdlBWoWYrDGTT")
+    !(elm.parentNode as HTMLElement).hasAttribute(
+      "manual-5DDspa25gdlBWoWYrDGTT"
+    )
   ) {
     (elm.parentNode as HTMLElement).setAttribute(
       "manual-5DDspa25gdlBWoWYrDGTT",

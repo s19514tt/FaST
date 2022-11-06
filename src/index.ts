@@ -9,8 +9,8 @@ async function main() {
   parser.add_argument("filename", { type: String });
   const filepath = parser.parse_args().filename;
   const gp2TextFile = await loadFile(filepath);
-  const [parsedBase, variables] = parseGp2File(gp2TextFile);
-  const js = generateJs(parsedBase, variables);
+  const [parsedBase, variables, jsCode] = parseGp2File(gp2TextFile);
+  const js = generateJs(parsedBase, variables, jsCode);
   const [filename, ext] = extractFilenameAndExtension(filepath);
   saveFile(`${filename}.g.js`, js);
 }

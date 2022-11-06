@@ -1,6 +1,7 @@
 import { nanoid } from "nanoid";
 import { HTMLElement, Node, NodeType } from "node-html-parser";
 import { Dependent } from "../types/dependent";
+import { alphabetId } from "../utils/alphabet_id";
 
 export function findDependencies(
   elm: Node,
@@ -43,7 +44,7 @@ function parseRawText(
     if (htmlElm.hasAttribute("id")) {
       id = htmlElm.getAttribute("id") as string;
     } else {
-      id = nanoid();
+      id = alphabetId();
     }
     const dependencies: string[] = [];
     for (let item of matches) {
