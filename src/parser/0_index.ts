@@ -44,7 +44,7 @@ export function parseGp2File(gp2TextFile: string): [
   const dividedHtml = divideHtmlBlocks(parsedHtml);
   findHtmlBlockOfDeps(dependents, dividedHtml);
   const base = findChildBlocksFromBase(dividedHtml);
-  if (true) {
+  if (false) {
     printHtmlBlock(base);
   }
   return [base, variables, languageParsed["script"]];

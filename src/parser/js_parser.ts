@@ -1,6 +1,10 @@
-import { parse } from "@typescript-eslint/typescript-estree";
+import {
+  AST,
+  parse,
+  TSESTreeOptions,
+} from "@typescript-eslint/typescript-estree";
 
-export function parseJs(js: string) {
+export function parseJs(js: string): AST<TSESTreeOptions> {
   const parsedJs = parse(js);
   return parsedJs;
 }

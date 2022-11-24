@@ -1,11 +1,14 @@
 {
-  "name": "gp2",
-  "version": "1.0.0",
+  "name": "@s19514tt/gp2",
+  "version": "1.0.6",
   "description": "",
-  "main": "index.js",
+  "main": "./dist/convert.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/s19514tt"
   },
   "keywords": [],
   "author": "tomu_1576 <s19514tt@sfc.keio.ac.jp> (https://github.com/s19514tt)",
@@ -14,6 +17,8 @@
     "@typescript-eslint/typescript-estree": "^5.30.7",
     "argparse": "^2.0.1",
     "nanoid": "^3.0.0",
+    "css-select": "^4.2.1",
+    "he": "1.2.0",
     "node-html-parser": "file:libs/node-html-parser"
   },
   "devDependencies": {

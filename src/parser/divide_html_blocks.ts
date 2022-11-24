@@ -90,6 +90,7 @@ function checkIfHtmlBlock(
       id = elm.getAttribute("id") as string;
     } else {
       id = alphabetId();
+      elm.setAttribute("id", id);
     }
 
     elementsToDelete.push({

@@ -13,17 +13,17 @@ export function generateBaseHtmlAndRenderQueue(block: HtmlBlock) {
     let rawString = (block.element.childNodes[0] as HTMLElement).innerHTML;
     const innerElm: string[] = [];
     while (true) {
-      const txtNodeRegex = /^(\\place_for_text_node_child-elm\d\\)|<.+?<\/.+?>/;
+      const txtNodeRegex = /^(\\place_for_text_node_.+\\)|<.+?<\/.+?>/;
 
       const match = rawString.match(txtNodeRegex);
       if (match != null) {
         const isLastElmAndNewElmHTML = () => {
-          if (match[0].startsWith("\\place_for_text_node_child-elm")) {
+          if (match[0].startsWith("\\place_for_text_node_")) {
             return false;
           } else {
             if (innerElm.length > 0) {
               const lastElm = innerElm[innerElm.length - 1];
-              return !lastElm.startsWith("\\place_for_text_node_child-elm");
+              return !lastElm.startsWith("\\place_for_text_node_");
             } else {
               return false;
             }

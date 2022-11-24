@@ -1,0 +1,34 @@
+html:
+    <div>
+        <div :if='show1'>テスト</div>
+        <div :if='show2'>テスト</div>
+        <div :if='show3'>テスト</div>
+        <div :if='show4'>テスト</div>
+        <div :if='show5'>テスト</div>
+        <div :if='show6'>テスト</div>
+        <div :if='show7'>テスト</div>
+        <div :if='show8'>テスト</div>
+        <div :if='show9'>テスト</div>
+        <div :if='show10'>テスト</div>
+        <div>テスト1</div>
+        <div>テスト2</div>
+        <div>テスト3</div>
+        <div>テスト4</div>
+        <div>テスト5</div>
+        <div>テスト6</div>
+        <div>テスト7</div>
+        <div>テスト8</div>
+        <div>テスト9</div>
+        <div>テスト10</div>
+    </div>
+script:
+    let show1 = Math.random() > 0.5;
+    let show2 = Math.random() > 0.5;
+    let show3 = Math.random() > 0.5;
+    let show4 = Math.random() > 0.5;
+    let show5 = Math.random() > 0.5;
+    let show6 = Math.random() > 0.5;
+    let show7 = Math.random() > 0.5;
+    let show8 = Math.random() > 0.5;
+    let show9 = Math.random() > 0.5;
+    let show10 = Math.random() > 0.5;

@@ -11,3 +11,4 @@ script:
     let show1 = true
     let show2 = false
     let show3 = true
+    show1 = true

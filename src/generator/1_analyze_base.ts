@@ -20,7 +20,7 @@ function walkElms(
   },
   renderInfo: RenderInfo
 ) {
-  console.log("search children" + htmlBlock.ref);
+  // console.log("search children" + htmlBlock.ref);
   if (htmlBlock.ref[0] === "Base") {
     searchChildren(htmlBlock, baseBlock, condRef, renderInfo);
   } else if (htmlBlock.ref[0] === "Empty") {
@@ -30,18 +30,18 @@ function walkElms(
       throw Error("Condition is not defined");
     }
     if (condRef[trimmedCond] === "true") {
-      console.log("(baseBlock.element.childNodes[0] as HTMLElement).id");
-      console.log((baseBlock.element.childNodes[0] as HTMLElement).id);
-      console.log(htmlBlock.ref[2]);
+      // console.log("(baseBlock.element.childNodes[0] as HTMLElement).id");
+      // console.log((baseBlock.element.childNodes[0] as HTMLElement).id);
+      // console.log(htmlBlock.ref[2]);
       if (
         htmlBlock.ref[2] === (baseBlock.element.childNodes[0] as HTMLElement).id
       ) {
         (baseBlock.element.childNodes[0] as HTMLElement).innerHTML +=
           htmlBlock.element.toString();
       } else {
-        console.log(
+        /* console.log(
           "htmlBlock.element.getElementById(htmlBlock.ref[2]).innerHTML"
-        );
+        ); */
         baseBlock.element.getElementById(htmlBlock.ref[2]).innerHTML =
           baseBlock.element.getElementById(htmlBlock.ref[2]).innerHTML +
           htmlBlock.element.toString();

@@ -30,7 +30,7 @@ function genIfBlock(htmlBlock: HtmlBlock, renderInfo: RenderInfo): string {
   );
   const notToRender = renderInfo.blocksNotToRender.includes(htmlBlock.blockId);
   if (notToRender) {
-    console.log("isAlreadyRendered || notToRender");
+    // console.log("isAlreadyRendered || notToRender");
     return "";
   }
   if (isAlreadyRendered) {
