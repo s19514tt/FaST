@@ -1,3 +1,4 @@
+import { printHtmlBlock } from "../parser/0_index";
 import { HtmlBlock } from "../types/html_block";
 import { RenderInfo } from "../types/render_info";
 
@@ -7,14 +8,42 @@ export function genJs(
   jsCode: string
 ): string {
   let js = jsCode;
-  js += genRenderFunc(htmlBlock);
+  // js += genRenderFunc(htmlBlock);
   js += `document.body.innerHTML = \`${htmlBlock.element.toString()}\`
 `;
+  // js.replace(/Kn(7CY94n/gm, "Kn7CY94n");
 
-  const cond = genIfBlock(htmlBlock, renderInfo);
-
-  js += `${cond}
-`;
+  // list all strings between Kn7CY94nJiwy1bSfqOaKW__ and " from js
+  const regex = /Kn7CY94nJiwy1bSfqOaKW__(.*?)"/gm;
+  const matches = js.matchAll(regex);
+  for (const match of matches) {
+    const findHtmlBlockFromId = (
+      id: string,
+      block: HtmlBlock
+    ): HtmlBlock | null => {
+      if (block.element.id === id) {
+        return block;
+      } else {
+        for (const child of block.childHtmlBlocks) {
+          const found = findHtmlBlockFromId(id, child);
+          if (found) {
+            return found;
+          }
+        }
+      }
+      return null;
+    };
+    const foundHtmlBlock = findHtmlBlockFromId(match[1], htmlBlock);
+    if (!foundHtmlBlock) {
+      throw Error(`HtmlBlock with id ${match[1]} is not found`);
+    }
+    js = js.replace(
+      `<span id="Kn7CY94nJiwy1bSfqOaKW__${match[1]}"></span>`,
+      `<span id="Kn7CY94nJiwy1bSfqOaKW__${match[1]}"></span>\${${
+        foundHtmlBlock.condition
+      }?\`${foundHtmlBlock.element.toString()}\`:""}`
+    );
+  }
 
   return js;
 }

@@ -51,7 +51,7 @@ export function parseGp2File(gp2TextFile: string): [
   // console.log("----------------------------");
 }
 
-function printHtmlBlock(item: HtmlBlock) {
+export function printHtmlBlock(item: HtmlBlock, printChild = true) {
   console.log("----------------------------");
   console.log("elm", item.element.toString());
   console.log("ref", item.ref);
@@ -60,6 +60,8 @@ function printHtmlBlock(item: HtmlBlock) {
   console.log("block", item.blockId);
   console.log("deps", item.dependencies);
   console.log("childs");
-  item.childHtmlBlocks.map((child) => printHtmlBlock(child));
+  if (printChild) {
+    item.childHtmlBlocks.map((child) => printHtmlBlock(child));
+  }
   console.log("----------------------------");
 }
