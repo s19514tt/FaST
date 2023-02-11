@@ -1,6 +1,6 @@
 {
   "name": "@s19514tt/gp2",
-  "version": "1.0.6",
+  "version": "1.0.9",
   "description": "",
   "main": "./dist/convert.js",
   "scripts": {
